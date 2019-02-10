@@ -7,6 +7,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { APP_CONFIG, APP_DI_CONFIG } from './app-config.constants';
+import { HomeModule } from './home/home.module';
+import { PageNotFoundModule } from './page-not-found/page-not-found.module';
 
 @NgModule({
   declarations: [
@@ -16,6 +18,8 @@ import { APP_CONFIG, APP_DI_CONFIG } from './app-config.constants';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    HomeModule,
+    PageNotFoundModule
   ],
   providers: [{
     provide: APP_CONFIG,
