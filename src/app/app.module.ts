@@ -21,6 +21,8 @@ import { RegisterModule } from './register/register.module';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    HomeModule,
+    PageNotFoundModule,
     RegisterModule,
   ],
   providers: [{
