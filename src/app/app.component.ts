@@ -10,6 +10,8 @@ import { IAppConfig } from './app-config.interface';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  public currentYear = new Date().getFullYear();
+
   constructor(
     private title: Title,
     private meta: Meta,
