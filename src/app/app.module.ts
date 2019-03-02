@@ -7,19 +7,23 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { APP_CONFIG, APP_DI_CONFIG } from './app-config.constants';
-import { HomeModule } from './home/home.module';
-import { PageNotFoundModule } from './page-not-found/page-not-found.module';
+import { HomeComponent } from './home/home.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { RegisterModule } from './register/register.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     HomeModule,
-    PageNotFoundModule
+    PageNotFoundModule,
+    RegisterModule,
   ],
   providers: [{
     provide: APP_CONFIG,
