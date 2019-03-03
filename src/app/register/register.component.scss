@@ -1,6 +1,23 @@
 .app-register {
+  display: flex;
+  flex-direction: column;
+
   &__heading {
     display: flex;
     justify-content: center;
+  }
+
+  &__form-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__form {
+    flex: 0 0 80%;
+  }
+
+  &__form-buttons-container {
+    display: flex;
+    justify-content: flex-end;
   }
 }
