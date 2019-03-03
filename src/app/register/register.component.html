@@ -2,4 +2,101 @@
   <div class="app-register__heading">
     <h1 class="heading heading--main">Register</h1>
   </div>
+
+  <div class="app-register__form-container">
+    <form
+      class="app-register__form"
+      [formGroup]="registerForm"
+      (ngSubmit)="onSubmit()"
+    >
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          placeholder="First name"
+          formControlName="firstName"
+        >
+        <mat-error *ngIf="hasError('firstName', 'minlength')">
+          Please enter minimum 3 characters
+        </mat-error>
+        <mat-error *ngIf="hasError('firstName', 'maxlength')">
+          Value should not exceed 60 characters
+        </mat-error>
+        <mat-error *ngIf="hasError('firstName', 'required')">
+          First name is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          type="text"
+          matInput
+          placeholder="Last name"
+          formControlName="lastName"
+        >
+        <mat-error *ngIf="hasError('lastName', 'required')">
+          Last name is required
+        </mat-error>
+        <mat-error *ngIf="hasError('lastName', 'minlength')">
+          Please enter minimum 3 characters
+        </mat-error>
+        <mat-error *ngIf="hasError('lastName', 'maxlength')">
+          Value should not exceed 60 characters
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          type="email"
+          matInput
+          placeholder="Email"
+          formControlName="email"
+        >
+        <mat-error *ngIf="hasError('email', 'required')">
+          Email is required
+        </mat-error>
+        <mat-error *ngIf="hasError('email', 'email')">
+          Please enter a valid email
+        </mat-error>
+        <mat-error *ngIf="hasError('email', 'emailAlreadyRegistered')">
+          This email is already registered with us
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          type="password"
+          matInput
+          placeholder="Password"
+          formControlName="password"
+        >
+        <mat-error *ngIf="hasError('password', 'required')">
+          Password is required
+        </mat-error>
+        <mat-error *ngIf="hasError('password', 'minlength')">
+          Please enter at least 3 characters
+        </mat-error>
+        <mat-error *ngIf="hasError('password', 'maxlength')">
+          Value should not exceed 255 characters
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          type="password"
+          matInput
+          placeholder="Confirm password"
+          formControlName="confirmPassword"
+          [errorStateMatcher]="passwordsMatcher"
+        >
+        <mat-error *ngIf="registerForm.hasError('passwordMismatch')">
+          Password and confirm password should match
+        </mat-error>
+      </mat-form-field>
+
+      <div class="app-register__form-buttons-container">
+        <button [disabled]="asyncValidationInProgress" mat-raised-button type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
 </div>
