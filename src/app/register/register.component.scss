@@ -20,4 +20,22 @@
     display: flex;
     justify-content: flex-end;
   }
+
+  &__2-column-form-field {
+    display: flex;
+
+    & > div + div {
+      margin-left: 10px;
+    }
+
+    & > div {
+      flex: 1 0 50%;
+    }
+  }
+
+  &__form-radio-field {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
 }
