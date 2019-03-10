@@ -94,6 +94,42 @@
         </mat-error>
       </mat-form-field>
 
+      <div class="app-register__2-column-form-field">
+        <div class="app-register__form-radio-field">
+          <div>
+            Gender:
+            <mat-radio-group formControlName="gender">
+              <mat-radio-button [value]="gender.Male">Male</mat-radio-button>
+              <mat-radio-button [value]="gender.Female">Female</mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <div>
+            <mat-error *ngIf="isFormSubmitted && hasError('gender', 'required')">
+              Gender is required
+            </mat-error>
+          </div>
+        </div>
+
+        <div>
+          <mat-form-field>
+            <input
+              readonly
+              matInput
+              [min]="birthDateRange.min"
+              [max]="birthDateRange.max"
+              [matDatepicker]="picker"
+              placeholder="Birth date"
+              formControlName="birthDate"
+            >
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="hasError('birthDate', 'required')">
+              Birth date is required for other than female genders
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
       <div class="app-register__form-buttons-container">
         <button [disabled]="asyncValidationInProgress" mat-raised-button type="submit">Submit</button>
       </div>

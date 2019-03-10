@@ -6,6 +6,9 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatButtonModule,
+  MatRadioModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
  } from '@angular/material';
 
 import { RegisterComponent } from './register.component';
@@ -18,6 +21,9 @@ import { RegisterComponent } from './register.component';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ]
 })
 export class RegisterModule { }

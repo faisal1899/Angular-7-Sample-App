@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,9 @@ export class UserService {
     'max@test.com',
   ];
 
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   private _isEmailRegistered(email: string): boolean {
     return this.existingEmails.includes(email);
@@ -22,4 +25,21 @@ export class UserService {
         delay(3000),
       );
   }
+
+  register(data: any): Observable<IRegisterResponse> {
+    return this.http.post<IRegisterResponse>(
+      'api/register',
+      data,
+    );
+  }
+}
+
+export enum Gender {
+  Male = 1,
+  Female = 2,
+}
+
+export interface IRegisterResponse {
+  success: boolean;
+  message: string;
 }
