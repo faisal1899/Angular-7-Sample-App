@@ -1,0 +1,19 @@
+@import '../../../scss/variables.scss';
+
+.app-snackbar {
+  font-size: 1.6rem;
+
+  &__text {
+    text-align: center;
+
+    &.success {
+      color: green;
+    }
+    &.error {
+      color: red;
+    }
+    &.info {
+      color: white;
+    }
+  }
+}

@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { filter, debounceTime, switchMap, finalize } from 'rxjs/operators';
+import { filter, debounceTime, switchMap } from 'rxjs/operators';
 
-import { UserService, Gender } from '../user.service';
 import { ConfirmPasswordErrorStateMatcher } from './confirm-password-error-state-matcher';
+import { UserService, Gender } from '../shared/services';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { CoreService } from '../core/core.service';
 
 @Component({
   selector: 'app-register',
@@ -17,10 +19,16 @@ export class RegisterComponent implements OnInit {
   gender = Gender;
   birthDateRange: { min: Date, max: Date };
   isFormSubmitted = false;
+  profilePic: File;
+  // localFileUploadUrl: string;
+  localFileUploadUrl: string | ArrayBuffer;
+  private profilePicFormControl: FormControl;
 
   constructor(
     private formBuilder: FormBuilder,
     private service: UserService,
+    private coreService: CoreService,
+    private cd: ChangeDetectorRef,
   ) { }
 
   ngOnInit() {
@@ -56,6 +64,8 @@ export class RegisterComponent implements OnInit {
       Validators.email,
     ]);
 
+    this.profilePicFormControl = new FormControl(null, Validators.required);
+
     this.registerForm = this.formBuilder.group({
       firstName: new FormControl('', [
         Validators.required,
@@ -76,6 +86,7 @@ export class RegisterComponent implements OnInit {
       confirmPassword: new FormControl(''),
       gender: new FormControl('', [Validators.required]),
       birthDate: new FormControl('', [Validators.required]),
+      profilePic: this.profilePicFormControl,
     }, { validators: this.confirmPasswordValidator });
 
     emailField.valueChanges
@@ -108,14 +119,61 @@ export class RegisterComponent implements OnInit {
     return this.registerForm.controls[controlName].hasError(errorName);
   }
 
+  public onFileChange(e: Event): void {
+    // console.log('e = ', e.target);
+    const targetFiles = (e.target as HTMLInputElement).files;
+    if (targetFiles && targetFiles.length) {
+      const file = targetFiles[0];
+      // console.log('targetFiles = ', targetFiles);
+      // console.log('file = ', file);
+      this.profilePic = file;
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (file.type.startsWith('image/')) {
+          this.localFileUploadUrl = reader.result;
+        } else {
+          this.localFileUploadUrl = null;
+        }
+      };
+      reader.readAsDataURL(file);
+      if (!file.type.startsWith('image/')) {
+        this.profilePicFormControl.setErrors({ notAnImage: true });
+      } else if (file.size > (1024 * 1024 * 5)) {
+        this.profilePicFormControl.setErrors({ fileToLarge: true});
+      } else {
+        this.profilePicFormControl.setErrors(null);
+      }
+    }
+    // this.cd.markForCheck();
+  }
+
+
   public onSubmit(): void {
     this.isFormSubmitted = true;
     if (this.registerForm.invalid) {
       return;
     }
-    // alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value));
-    this.service.register(this.registerForm.value)
-      .subscribe(response => console.log('response = ', response));
+    const formData = new FormData();
+    Object.keys(this.registerForm.value).forEach(key => {
+      formData.append(key, this.registerForm.value[key]);
+    });
+    formData.append('profilePic', this.profilePic);
+    // this.service.register(formData)
+    //   .subscribe(response => console.log('response = ', response));
+    this.service.register(formData)
+      .subscribe(
+        (event) => {
+          if (event.type === HttpEventType.UploadProgress) {
+            const percentDone = Math.round(100 * event.loaded / event.total);
+            console.log(`File is ${percentDone}% loaded.`);
+          } else if (event instanceof HttpResponse) {
+            console.log('File is completely loaded!');
+            this.coreService.onSuccess(event.body.message);
+          }
+        },
+        error => console.log('Upload error: ', error),
+        () => console.log('Upload done')
+      );
   }
 
 }

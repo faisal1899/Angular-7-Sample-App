@@ -6,6 +6,7 @@
   <div class="app-register__form-container">
     <form
       class="app-register__form"
+      novalidate
       [formGroup]="registerForm"
       (ngSubmit)="onSubmit()"
     >
@@ -128,6 +129,37 @@
             </mat-error>
           </mat-form-field>
         </div>
+      </div>
+
+      <!-- <mat-form-field>
+        <input
+          type="password"
+          matInput
+          placeholder="Confirm password"
+          formControlName="confirmPassword"
+          [errorStateMatcher]="passwordsMatcher"
+        >
+        <mat-error *ngIf="registerForm.hasError('passwordMismatch')">
+          Password and confirm password should match
+        </mat-error>
+      </mat-form-field> -->
+
+      <div>
+        <input
+          type="file"
+          formControlName="profilePic"
+          (change)="onFileChange($event)"
+        >
+        <img [src]="localFileUploadUrl" *ngIf="localFileUploadUrl" width="50">
+        <mat-error *ngIf="isFormSubmitted && hasError('profilePic', 'required')">
+          Profile pic is required
+        </mat-error>
+        <mat-error *ngIf="isFormSubmitted && hasError('profilePic', 'notAnImage')">
+          Uploaded file is not an image
+        </mat-error>
+        <mat-error *ngIf="isFormSubmitted && hasError('profilePic', 'fileToLarge')">
+          Image size should not exceed 5MB
+        </mat-error>
       </div>
 
       <div class="app-register__form-buttons-container">
