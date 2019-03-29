@@ -1,11 +1,12 @@
-<div class="app-register">
-  <div class="app-register__heading">
+<div class="form-page">
+  <div class="form-page__heading">
     <h1 class="heading heading--main">Register</h1>
   </div>
 
-  <div class="app-register__form-container">
+  <div class="form-page__form-container">
     <form
-      class="app-register__form"
+      class="form-page__form"
+      novalidate
       [formGroup]="registerForm"
       (ngSubmit)="onSubmit()"
     >
@@ -94,8 +95,8 @@
         </mat-error>
       </mat-form-field>
 
-      <div class="app-register__2-column-form-field">
-        <div class="app-register__form-radio-field">
+      <div class="form-page__2-column-form-field">
+        <div class="form-page__form-radio-field">
           <div>
             Gender:
             <mat-radio-group formControlName="gender">
@@ -130,7 +131,38 @@
         </div>
       </div>
 
-      <div class="app-register__form-buttons-container">
+      <!-- <mat-form-field>
+        <input
+          type="password"
+          matInput
+          placeholder="Confirm password"
+          formControlName="confirmPassword"
+          [errorStateMatcher]="passwordsMatcher"
+        >
+        <mat-error *ngIf="registerForm.hasError('passwordMismatch')">
+          Password and confirm password should match
+        </mat-error>
+      </mat-form-field> -->
+
+      <div>
+        <input
+          type="file"
+          formControlName="profilePic"
+          (change)="onFileChange($event)"
+        >
+        <img [src]="localFileUploadUrl" *ngIf="localFileUploadUrl" width="50">
+        <mat-error *ngIf="isFormSubmitted && hasError('profilePic', 'required')">
+          Profile pic is required
+        </mat-error>
+        <mat-error *ngIf="isFormSubmitted && hasError('profilePic', 'notAnImage')">
+          Uploaded file is not an image
+        </mat-error>
+        <mat-error *ngIf="isFormSubmitted && hasError('profilePic', 'fileToLarge')">
+          Image size should not exceed 5MB
+        </mat-error>
+      </div>
+
+      <div class="form-page__form-buttons-container">
         <button [disabled]="asyncValidationInProgress" mat-raised-button type="submit">Submit</button>
       </div>
     </form>

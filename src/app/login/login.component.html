@@ -1,3 +1,42 @@
-<p>
-  login works!
-</p>
+<div class="form-page">
+  <div class="form-page__heading">
+    <h1 class="heading heading--main">Login / isLoggedIn = {{isLoggedIn}}</h1>
+  </div>
+
+  <div class="form-page__form-container">
+    <form
+      class="form-page__form"
+      novalidate
+      [formGroup]="loginForm"
+      (ngSubmit)="onSubmit()"
+    >
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          placeholder="Email"
+          formControlName="email"
+        />
+        <mat-error *ngIf="loginForm.controls['email'].hasError('required')">
+          Email is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          type="password"
+          formControlName="password"
+          placeholder="Password"
+        />
+        <mat-error *ngIf="loginForm.controls['password'].hasError('required')">
+          Password is required
+        </mat-error>
+      </mat-form-field>
+
+      <div class="form-page__form-buttons-container">
+        <button mat-raised-button type="submit">Login</button>
+      </div>
+    </form>
+  </div>
+</div>
