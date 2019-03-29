@@ -6,12 +6,14 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
-import { APP_CONFIG, APP_DI_CONFIG } from './app-config.constants';
-import { RegisterModule } from './register/register.module';
-import { HomeModule } from './home/home.module';
-import { PageNotFoundModule } from './page-not-found/page-not-found.module';
-import { HttpConfigInterceptor } from './interceptor/httpconfig.interceptor';
+import { HomeModule } from './home';
+import { RegisterModule } from './register';
+import { CoreModule } from './core/core.module';
+import { APP_CONFIG, APP_DI_CONFIG } from './core/config/app-config.constants';
+import { LoginModule } from './login';
+import { AlreadyLoggedInGuard } from './core/already-logged-in-guard';
+import { ProfileModule } from './profile/profile.module';
+import { PageNotFoundModule } from './core/page-not-found';
 
 @NgModule({
   declarations: [
@@ -24,18 +26,17 @@ import { HttpConfigInterceptor } from './interceptor/httpconfig.interceptor';
     HomeModule,
     PageNotFoundModule,
     RegisterModule,
+    LoginModule,
     HttpClientModule,
+    CoreModule,
+    ProfileModule,
   ],
   providers: [
     {
       provide: APP_CONFIG,
       useValue: APP_DI_CONFIG,
     },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HttpConfigInterceptor,
-      multi: true,
-    }
+    AlreadyLoggedInGuard,
   ],
   bootstrap: [AppComponent]
 })
