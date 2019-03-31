@@ -1,9 +1,12 @@
-import { Directive, ElementRef, Renderer2, OnInit } from '@angular/core';
+import { Directive, ElementRef, Renderer2, OnInit, HostListener, HostBinding, Input } from '@angular/core';
 
 @Directive({
   selector: '[appBackgroundColor]'
 })
 export class AppBackgroundColorDirective implements OnInit {
+  @Input() defaultColor = 'transparent';
+  @Input() highlightColor = 'pink';
+  @HostBinding('style.backgroundColor') backgroundColor = this.defaultColor;
 
   constructor(
     private el: ElementRef,
@@ -12,7 +15,18 @@ export class AppBackgroundColorDirective implements OnInit {
 
   ngOnInit() {
     console.log('this.el = ', this.el);
-    this.renderer.setStyle(this.el.nativeElement, 'background-color', 'red');
+  }
+
+  @HostListener('mouseenter') mouseEnter() {
+    // this.renderer.setStyle(this.el.nativeElement, 'background-color', 'red');
+    // this.backgroundColor = 'yellow';
+    this.backgroundColor = this.highlightColor;
+  }
+
+  @HostListener('mouseleave') mouuseLeave() {
+    // this.renderer.setStyle(this.el.nativeElement, 'background-color', 'transparent');
+    // this.backgroundColor = 'transparent';
+    this.backgroundColor = this.defaultColor;
   }
 
 }
