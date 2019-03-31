@@ -13,6 +13,7 @@ export class UserService {
   private existingEmails = [
     'max@test.com',
   ];
+  private userPermissions: string[];
   public isLoggedIn = false;
 
   constructor(
@@ -72,9 +73,26 @@ export class UserService {
   updateIsLoggedInStatus(): void {
     this.isLoggedIn = !!localStorage.getItem('appToken');
   }
+
+  getUserPermissions(): string[] {
+    return this.userPermissions;
+  }
+
+  fetchUserPermissions(): Promise<any> {
+    console.log('under UserService / fetchUserPermissions');
+    return this.http
+      .get('api/userPermissions')
+      .toPromise()
+      .then((res: string[]) => this.userPermissions = res);
+  }
 }
 
 export enum Gender {
-  Male,
-  Female,
+  Male = 1,
+  Female = 2,
+}
+
+export interface IRegisterResponse {
+  success: boolean;
+  message: string;
 }
