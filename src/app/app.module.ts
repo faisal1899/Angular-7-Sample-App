@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +13,7 @@ import { APP_CONFIG, APP_DI_CONFIG } from './core/config/app-config.constants';
 import { LoginModule } from './login';
 import { AlreadyLoggedInGuard } from './core/already-logged-in-guard';
 import { PageNotFoundModule } from './core/page-not-found';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { PageNotFoundModule } from './core/page-not-found';
     LoginModule,
     HttpClientModule,
     CoreModule,
+    SharedModule,
   ],
   providers: [
     {
