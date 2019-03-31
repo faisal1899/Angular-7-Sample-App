@@ -6,6 +6,7 @@ import { PageNotFoundComponent } from './core/page-not-found';
 import { LoginComponent } from './login';
 import { AlreadyLoggedInGuard } from './core/already-logged-in-guard';
 import { ProfileComponent } from './profile';
+import { AuthGuard } from './core/auth-guard';
 
 const routes: Routes = [
   {
@@ -28,7 +29,8 @@ const routes: Routes = [
   {
     path: 'profile',
     pathMatch: 'full',
-    component: ProfileComponent
+    component: ProfileComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: '**',
