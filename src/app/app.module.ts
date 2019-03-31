@@ -12,7 +12,6 @@ import { CoreModule } from './core/core.module';
 import { APP_CONFIG, APP_DI_CONFIG } from './core/config/app-config.constants';
 import { LoginModule } from './login';
 import { AlreadyLoggedInGuard } from './core/already-logged-in-guard';
-import { ProfileModule } from './profile/profile.module';
 import { PageNotFoundModule } from './core/page-not-found';
 
 @NgModule({
@@ -29,7 +28,6 @@ import { PageNotFoundModule } from './core/page-not-found';
     LoginModule,
     HttpClientModule,
     CoreModule,
-    ProfileModule,
   ],
   providers: [
     {

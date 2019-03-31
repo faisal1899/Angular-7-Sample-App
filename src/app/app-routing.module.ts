@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { HomeComponent } from './home';
 import { RegisterComponent } from './register';
 import { PageNotFoundComponent } from './core/page-not-found';
 import { LoginComponent } from './login';
 import { AlreadyLoggedInGuard } from './core/already-logged-in-guard';
-import { ProfileComponent } from './profile';
-import { AuthGuard } from './core/auth-guard';
 
 const routes: Routes = [
   {
@@ -28,9 +26,7 @@ const routes: Routes = [
   },
   {
     path: 'profile',
-    pathMatch: 'full',
-    component: ProfileComponent,
-    canActivate: [AuthGuard]
+    loadChildren: './profile/profile.module#ProfileModule',
   },
   {
     path: '**',
@@ -39,7 +35,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
