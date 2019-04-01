@@ -45,7 +45,7 @@ function fetchUserPermissions(service: UserService) {
     },
     {
       provide: APP_INITIALIZER, useFactory: fetchUserPermissions, deps: [UserService], multi: true
-    },
+    }, // If lazy loading doesn't work then try commenting this out run the app and uncomment the app.
     AlreadyLoggedInGuard,
   ],
   bootstrap: [AppComponent]
