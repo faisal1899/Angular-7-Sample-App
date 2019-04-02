@@ -29,6 +29,10 @@ const routes: Routes = [
     loadChildren: './profile/profile.module#ProfileModule',
   },
   {
+    path: 'users',
+    loadChildren: './user/user.module#UserModule',
+  },
+  {
     path: '**',
     component: PageNotFoundComponent,
   }
