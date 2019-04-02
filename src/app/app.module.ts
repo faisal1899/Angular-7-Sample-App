@@ -3,6 +3,7 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +16,7 @@ import { AlreadyLoggedInGuard } from './core/already-logged-in-guard';
 import { PageNotFoundModule } from './core/page-not-found';
 import { SharedModule } from './shared/shared.module';
 import { UserService } from './shared/services';
+import { listUserReducer } from './user/store/list-user.reducer';
 
 function fetchUserPermissions(service: UserService) {
   console.log('under main fetchUserPermissions');
@@ -36,6 +38,7 @@ function fetchUserPermissions(service: UserService) {
     HttpClientModule,
     CoreModule,
     SharedModule,
+    StoreModule.forRoot({ listUser: listUserReducer }),
   ],
   providers: [
     {
