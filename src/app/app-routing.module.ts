@@ -33,6 +33,10 @@ const routes: Routes = [
     loadChildren: './user/user.module#UserModule',
   },
   {
+    path: 'countries',
+    loadChildren: './country/country.module#CountryModule',
+  },
+  {
     path: '**',
     component: PageNotFoundComponent,
   }
