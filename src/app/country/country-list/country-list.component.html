@@ -1,0 +1,25 @@
+<div class="list-page">
+  <div class="list-page__heading">
+    <h1 class="heading heading--main">Countries</h1>
+  </div>
+
+  <div class="list-page__table-container">
+    <table class="list-table">
+      <tr>
+        <td colspan="2" class="list-table__top-link">
+          <a [routerLink]="['./add']">Add Country</a>
+        </td>
+      </tr>
+      <tr>
+        <th>Country Name</th>
+        <th>&nbsp;</th>
+      </tr>
+      <tr *ngFor="let country of (countriesState | async).countries">
+        <td>{{country.name}}</td>
+        <td>
+          <a [routerLink]="['./edit', country.id]">Edit</a>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

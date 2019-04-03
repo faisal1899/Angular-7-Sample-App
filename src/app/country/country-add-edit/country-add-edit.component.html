@@ -1,0 +1,30 @@
+<div class="form-page">
+  <div class="form-page__heading">
+    <h1 class="heading heading--main">{{this.country?.id ? 'Edit' : 'Add'}} Country</h1>
+  </div>
+
+  <div class="form-page__form-container">
+    <form
+      class="form-page__form"
+      novalidate
+      [formGroup]="countryForm"
+      (ngSubmit)="onSubmit()"
+    >
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          placeholder="Country Name"
+          formControlName="name"
+        />
+        <mat-error *ngIf="countryForm.controls['name'].hasError('required')">
+          First Name is required
+        </mat-error>
+      </mat-form-field>
+
+      <div class="form-page__form-buttons-container">
+        <button mat-raised-button type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -16,7 +16,9 @@ import { AlreadyLoggedInGuard } from './core/already-logged-in-guard';
 import { PageNotFoundModule } from './core/page-not-found';
 import { SharedModule } from './shared/shared.module';
 import { UserService } from './shared/services';
-import { listUserReducer } from './user/store/list-user.reducer';
+import { reducers } from './store/app.reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { CountryEffects } from './country/store/country.effects';
 
 function fetchUserPermissions(service: UserService) {
   console.log('under main fetchUserPermissions');
@@ -38,7 +40,8 @@ function fetchUserPermissions(service: UserService) {
     HttpClientModule,
     CoreModule,
     SharedModule,
-    StoreModule.forRoot({ listUser: listUserReducer }),
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([CountryEffects]),
   ],
   providers: [
     {
