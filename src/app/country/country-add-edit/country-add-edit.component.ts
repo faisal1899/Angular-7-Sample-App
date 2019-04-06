@@ -70,15 +70,11 @@ export class CountryAddEditComponent implements OnInit, OnDestroy {
       return;
     }
     console.log('this.countryForm.value = ', this.countryForm.value);
-    let redirectionPath = '../';
     if (this.country.id) {
-      // this.store.dispatch(new CountryActions.EditCountry({...this.countryForm.value, id: this.country.id}));
       this.store.dispatch(new CountryActions.TryEditCountry({...this.countryForm.value, id: this.country.id}));
-      redirectionPath = '../../';
     } else {
       this.store.dispatch(new CountryActions.TryAddCountry(this.countryForm.value));
     }
-    this.router.navigate([redirectionPath], { relativeTo: this.activatedRoute});
   }
 
   ngOnDestroy() {

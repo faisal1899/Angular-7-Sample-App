@@ -5,6 +5,7 @@ import { map, switchMap } from 'rxjs/operators';
 import * as CountryActions from './country.actions';
 import { CountryModel } from '../country.model';
 import { CountryService } from '../country.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Injectable()
 export class CountryEffects {
@@ -20,7 +21,10 @@ export class CountryEffects {
             map(res => countryData)
           );
       }),
-      map(countryData => ({ type: CountryActions.ADD_COUNTRY, payload: countryData })),
+      map(countryData => {
+        this.router.navigate(['countries'], { relativeTo: this.route });
+        return { type: CountryActions.ADD_COUNTRY, payload: countryData };
+      }),
     );
 
   @Effect()
@@ -35,11 +39,16 @@ export class CountryEffects {
             map(response => countryData)
           );
       }),
-      map(countryData => ({ type: CountryActions.EDIT_COUNTRY, payload: countryData }))
+      map(countryData => {
+        this.router.navigate(['countries'], { relativeTo: this.route });
+        return { type: CountryActions.EDIT_COUNTRY, payload: countryData };
+      })
     );
 
   constructor(
     private actions$: Actions,
     private service: CountryService,
+    private router: Router,
+    private route: ActivatedRoute,
   ) {}
 }
