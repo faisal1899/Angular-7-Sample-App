@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import * as fromApp from '../../store/app.reducers';
 import * as fromCountry from '../store/country.reducers';
 
 @Component({
@@ -14,7 +13,7 @@ export class CountryListComponent implements OnInit {
   countriesState: Observable<fromCountry.State>;
 
   constructor(
-    private store: Store<fromApp.AppState>,
+    private store: Store<fromCountry.FeatureState>,
   ) { }
 
   ngOnInit() {
