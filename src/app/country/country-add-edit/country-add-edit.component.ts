@@ -6,7 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { map, mergeMap } from 'rxjs/operators';
 
 import * as CountryActions from '../store/country.actions';
-import * as fromApp from '../../store/app.reducers';
+import * as fromCountry from '../store/country.reducers';
 
 @Component({
   selector: 'app-country-add-edit',
@@ -21,7 +21,7 @@ export class CountryAddEditComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private store: Store<fromApp.AppState>,
+    private store: Store<fromCountry.FeatureState>,
     private router: Router,
     private activatedRoute: ActivatedRoute,
   ) { }

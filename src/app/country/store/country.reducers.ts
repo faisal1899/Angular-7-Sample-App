@@ -1,6 +1,10 @@
 import * as CountryActions from './country.actions';
 import { CountryModel } from '../country.model';
 
+export interface FeatureState {
+  countries: State;
+}
+
 export interface State {
   countries: CountryModel[];
 }
