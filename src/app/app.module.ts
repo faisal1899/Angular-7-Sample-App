@@ -4,6 +4,8 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { StoreDevtools, StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,6 +21,7 @@ import { UserService } from './shared/services';
 import { reducers } from './store/app.reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { CountryEffects } from './country/store/country.effects';
+import { environment } from '../environments/environment';
 
 function fetchUserPermissions(service: UserService) {
   console.log('under main fetchUserPermissions');
@@ -42,6 +45,8 @@ function fetchUserPermissions(service: UserService) {
     SharedModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([CountryEffects]),
+    StoreRouterConnectingModule,
+    !environment.production ? StoreDevtoolsModule.instrument() : [], // Ensure to add this module after StoreModule.
   ],
   providers: [
     {
